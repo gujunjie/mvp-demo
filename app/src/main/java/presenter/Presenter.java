@@ -1,32 +1,34 @@
 package presenter;
 
-import com.example.abc.myapplication28.BasePresenter;
-
-import model.IModel;
+import base.BasePresenter;
+import contract.Contract;
 import model.Model;
-import view.IView;
 
-public class Presenter extends BasePresenter<IView> implements IModel.GetUrlListener {
-    //用户交互时通知model获取数据并返回，然后通过回调让view显示数据
+public class Presenter extends BasePresenter<Contract.View>implements Contract.Presenter,Contract.onGetImageUrlListener {
 
-    IView iView;
-    IModel iModel;//model和view的引用
+    private Contract.View iView;
 
-    public Presenter(IView iView)
+    private Contract.Model iModel;
+
+    public Presenter(Contract.View iView)
     {
         this.iView=iView;
         iModel=new Model();
     }
-    public void getUrl()
-    {
-        iModel.getUrl(this);
-    }
-    @Override
-    public void onSuccess(String data) {
-        iView.showImage(data);
-    }
-    @Override
-    public void onFailure(String error) {
 
+
+    @Override
+    public void getImageUrl() {
+        iModel.getImageUrl(this);
+    }
+
+    @Override
+    public void getImageUrlSuccess(String url) {
+           iView.showImage(url);
+    }
+
+    @Override
+    public void getImageUrlFailure(String message) {
+           iView.showError(message);
     }
 }

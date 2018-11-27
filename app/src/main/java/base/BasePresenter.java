@@ -1,4 +1,4 @@
-package com.example.abc.myapplication28;
+package base;
 
 import java.lang.ref.WeakReference;
 
